@@ -5,7 +5,6 @@ const path = require('path');
 
 const file = (page) => path.resolve(__dirname, '..', 'ejs', `${page}.ejs`);
 
-
 function expressServer() {
   const server = express();
   server.set('view engine', 'ejs');
@@ -20,6 +19,7 @@ function expressServer() {
     `);
   });
 
+  server.use(express.static(path.resolve(__dirname, '..', 'styles')));
 
   server.use((request, response) => {
     switch (request.url) {
