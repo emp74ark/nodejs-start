@@ -2,5 +2,3 @@
 // httpSever;
 const expressServer = require('./modules/express.server');
 expressServer;
-
-const { contacts, victim } = require('./modules/fs');

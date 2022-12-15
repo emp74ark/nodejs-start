@@ -3,12 +3,13 @@ const { platform, version } = require('./os');
 const express = require('express');
 const path = require('path');
 
-const file = (page) => path.resolve(__dirname, '..', 'pages', `${page}.html`);
+const file = (page) => path.resolve(__dirname, '..', 'ejs', `${page}.ejs`);
 
 
 function expressServer() {
   const server = express();
-  
+  server.set('view engine', 'ejs');
+
   server.listen(port, '127.0.0.1', (err) => {
     err ? console.log(err) : console.log(`
       ***
@@ -19,17 +20,14 @@ function expressServer() {
     `);
   });
 
-  // server.get('/', (request, response) => {
-  //   response.sendFile(file('home'));
-  // });
 
   server.use((request, response) => {
-    switch(request.url) {
+    switch (request.url) {
       case '/':
-        response.sendFile(file('home'));
+        response.render(file('home'), { title: 'Home' });
         break;
       case '/contacts':
-        response.sendFile(file('contacts'));
+        response.render(file('contacts'), { title: 'Contacts' });
         break;
       case '/about':
         response.redirect('contacts');
@@ -37,7 +35,7 @@ function expressServer() {
       default:
         response
           .status(404)
-          .sendFile(file('error'));
+          .render(file('error'), { title: 'Error' });
         break;
     }
   });
