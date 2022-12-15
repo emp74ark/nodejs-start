@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "comma-dangle": "error",
+        "semi": "error",
+        "no-else-return": "error",
+        "object-curly-spacing": ["error", "always"],
+        "no-unused-vars": "warn",
+        "no-undef": "warn"
+    }
+}
