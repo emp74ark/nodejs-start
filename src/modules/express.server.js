@@ -1,7 +1,8 @@
-const { records } = require('./variables');
 const { platform, version } = require('./os');
 const express = require('express');
-const { file, styles } = require('./express-controllers/express-path.controller');
+const recordRoutes = require('./express-routes/express-record.routes');
+const staticRoutes = require('./express-routes/express-static.routes');
+const { styles } = require('./express-controllers/express-path.controller');
 require('dotenv').config();
 
 function expressServer() {
@@ -25,45 +26,8 @@ function expressServer() {
   server.use(express.static(styles));
   server.use(express.urlencoded({ extended: false }));
 
-  server.get('/records/:id', (request, response) => {
-    response.render(file('record'), { title: 'Record', record: records[0] });
-  });
-
-  server.post('/form', (request, response) => {
-    const { title, text, date } = request.body;
-    const record = {
-      id: Date.now(),
-      title,
-      text,
-      date
-    };
-    response.render(file('record'), { title: 'Record', record });
-  });
-
-  server.use((request, response) => {
-    switch (request.url) {
-      case '/':
-        response.render(file('home'), { title: 'Home' });
-        break;
-      case '/contacts':
-        response.render(file('contacts'), { title: 'Contacts' });
-        break;
-      case '/about':
-        response.redirect('contacts');
-        break;
-      case '/records':
-        response.render(file('records'), { title: 'Records', records });
-        break;
-      case '/form':
-        response.render(file('form'), { title: 'Create record' });
-        break;
-      default:
-        response
-          .status(404)
-          .render(file('error'), { title: 'Error' });
-        break;
-    }
-  });
+  server.use(recordRoutes);
+  server.use(staticRoutes);
 
 }
 
