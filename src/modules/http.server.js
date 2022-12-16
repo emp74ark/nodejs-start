@@ -2,7 +2,7 @@ const http = require('http');
 const { platform, version } = require('./os');
 const fs = require('fs');
 const path = require('path');
-const { port } = require('./variables');
+require('dotenv').config();
 
 const file = (url) => path.resolve(__dirname, '..', 'pages', `${url}.html`);
 
@@ -41,7 +41,7 @@ function httpServer() {
             response.end();
         });
     })
-        .listen(port, '127.0.0.1', function (err) {
+        .listen(process.env.PORT, '127.0.0.1', function (err) {
             err ? console.log(err) : console.log(`
         ***
         start webserver at ${platform},

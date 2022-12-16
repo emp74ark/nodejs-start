@@ -1,7 +1,8 @@
-const { port, records } = require('./variables');
+const { records } = require('./variables');
 const { platform, version } = require('./os');
 const express = require('express');
 const path = require('path');
+require('dotenv').config();
 
 const file = (page) => path.resolve(__dirname, '..', 'ejs', `${page}.ejs`);
 
@@ -9,7 +10,7 @@ function expressServer() {
   const server = express();
   server.set('view engine', 'ejs');
 
-  server.listen(port, '127.0.0.1', (err) => {
+  server.listen(process.env.PORT, '127.0.0.1', (err) => {
     err ? console.log(err) : console.log(`
       ***
       Start EXPRESS
@@ -20,7 +21,7 @@ function expressServer() {
   });
 
   server.use((request, response, next) => {
-    console.log(`Address: '${request.url}', method: '${request.method}'`);
+    console.log(`Address: '${request.url}', port: ${process.env.PORT}, method: '${request.method}'`);
     next();
   });
   server.use(express.static(path.resolve(__dirname, '..', 'styles')));
