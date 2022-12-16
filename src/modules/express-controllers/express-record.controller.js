@@ -1,8 +1,18 @@
 const { file } = require('./express-path.controller');
-const { records } = require('../variables');
+const records = require('../../files/records.json');
+const fs = require('fs');
+const { data } = require('./express-path.controller');
+
+function updateData(newData) {
+  fs.writeFile(data, JSON.stringify(newData), (err) => {
+    if (err) throw err;
+  });
+}
 
 const getRecord = (request, response) => {
-  response.render(file('record'), { title: 'Record', record: records[0] });
+  const { id } = request.params;
+  const record = records.find((el) => el.id == id);
+  response.render(file('record'), { title: 'Record', record });
 };
 
 const postRecord = (request, response) => {
@@ -11,12 +21,14 @@ const postRecord = (request, response) => {
     id: Date.now(),
     title,
     text,
-    date
+    date,
   };
-  response.render(file('record'), { title: 'Record', record });
+  const newData = [...records, record];
+  updateData(newData);
+  response.render(file('records'), { title: 'Records', records });
 };
 
 module.exports = {
   getRecord,
-  postRecord
+  postRecord,
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const { file } = require('../express-controllers/express-path.controller');
-const { records } = require('../variables');
+const records = require('../../files/records.json');
 
 const router = express.Router();
 
@@ -22,9 +22,7 @@ router.use((request, response) => {
       response.render(file('form'), { title: 'Create record' });
       break;
     default:
-      response
-        .status(404)
-        .render(file('error'), { title: 'Error' });
+      response.status(404).render(file('error'), { title: 'Error' });
       break;
   }
 });

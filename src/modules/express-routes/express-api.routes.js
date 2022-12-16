@@ -4,7 +4,7 @@ const {
   postRecord,
   getRecords,
   editRecord,
-  deleteRecord
+  deleteRecord,
 } = require('../express-controllers/express-api.controller');
 
 const router = express.Router();

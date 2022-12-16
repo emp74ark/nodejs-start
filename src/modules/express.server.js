@@ -25,7 +25,6 @@ function expressServer() {
   server.use(apiRoutes);
   server.use(recordRoutes);
   server.use(staticRoutes);
-
 }
 
 module.exports = expressServer();

@@ -24,7 +24,7 @@ const postRecord = (request, response) => {
     id: Date.now(),
     title,
     text,
-    date
+    date,
   };
   const newData = [...records, record];
   updateData(newData);
@@ -38,9 +38,9 @@ const editRecord = (request, response) => {
     id,
     title,
     text,
-    date
+    date,
   };
-  const newData = records.map(el => el.id == id ? el = record : el);
+  const newData = records.map((el) => (el.id == id ? (el = record) : el));
   updateData(newData);
   response.json(record);
 };
@@ -57,5 +57,5 @@ module.exports = {
   getRecord,
   postRecord,
   editRecord,
-  deleteRecord
+  deleteRecord,
 };
