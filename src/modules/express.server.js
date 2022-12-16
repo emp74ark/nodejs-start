@@ -1,10 +1,8 @@
 const { records } = require('./variables');
 const { platform, version } = require('./os');
 const express = require('express');
-const path = require('path');
+const { file, styles } = require('./express-controllers/express-path.controller');
 require('dotenv').config();
-
-const file = (page) => path.resolve(__dirname, '..', 'ejs', `${page}.ejs`);
 
 function expressServer() {
   const server = express();
@@ -24,7 +22,7 @@ function expressServer() {
     console.log(`Address: '${request.url}', port: ${process.env.PORT}, method: '${request.method}'`);
     next();
   });
-  server.use(express.static(path.resolve(__dirname, '..', 'styles')));
+  server.use(express.static(styles));
   server.use(express.urlencoded({ extended: false }));
 
   server.get('/records/:id', (request, response) => {
