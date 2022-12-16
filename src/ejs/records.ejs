@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./head.ejs') %>
+<body>
+  <%- include('./nav.ejs') %>
+  <h1><%= title %></h1>
+  <h2><a href="/form">Create record</a></h2>
+  <ul>
+    <% if(records.length){ %>
+      <% records.forEach(({id, title, date}) => { %>
+        <li>
+          <a href="/records/<%= id %>">
+            <span><%= title %></span> - 
+            <span><%= date %></span>
+          </a>
+        </li>
+      <% }) %>
+    <% } %>
+  </ul>
+</body>
+</html>

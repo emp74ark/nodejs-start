@@ -1,4 +1,4 @@
-const { port } = require('./variables');
+const { port, records } = require('./variables');
 const { platform, version } = require('./os');
 const express = require('express');
 const path = require('path');
@@ -19,7 +19,27 @@ function expressServer() {
     `);
   });
 
+  server.use((request, response, next) => {
+    console.log(`Address: '${request.url}', method: '${request.method}'`);
+    next();
+  });
   server.use(express.static(path.resolve(__dirname, '..', 'styles')));
+  server.use(express.urlencoded({ extended: false }));
+
+  server.get('/records/:id', (request, response) => {
+    response.render(file('record'), { title: 'Record', record: records[0] });
+  });
+
+  server.post('/form', (request, response) => {
+    const { title, text, date } = request.body;
+    const record = {
+      id: Date.now(),
+      title,
+      text,
+      date
+    };
+    response.render(file('record'), { title: 'Record', record });
+  });
 
   server.use((request, response) => {
     switch (request.url) {
@@ -31,6 +51,12 @@ function expressServer() {
         break;
       case '/about':
         response.redirect('contacts');
+        break;
+      case '/records':
+        response.render(file('records'), { title: 'Records', records });
+        break;
+      case '/form':
+        response.render(file('form'), { title: 'Create record' });
         break;
       default:
         response

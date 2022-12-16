@@ -18,3 +18,42 @@ nav a {
   font-size: 22px;
   text-decoration: none;
 }
+
+.record {
+  margin: 10px auto;
+  padding: 20px 15px;
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.title,
+.text,
+.date {
+  display: block;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.title::before {
+  content: 'Title: ';
+}
+
+.text {
+  margin: 10px 0;
+}
+
+.date {
+  font-style: italic;
+  text-align: right;
+}
+
+.date::before {
+  content: 'Date: ';
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+}
